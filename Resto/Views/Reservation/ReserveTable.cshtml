@@ -1,0 +1,86 @@
+@model Resto.ViewModels.Reservation.ReservationViewModel
+
+@{
+    ViewData["Title"] = "Reserve Page";
+}
+
+@section Style {
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="/css/crud.css">
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form style="margin-top: 30px;" class="generic-form" asp-action="ReserveTable" method="post" enctype="multipart/form-data">
+    
+    @Html.HiddenFor(m => m.TableId)
+    
+    <p   class="main-font  ">You are reserving for table @Model.TableId</p>
+    
+    <div class="form-group">
+        <label>Booker Name:</label>
+        <input class="form-control" type="text" asp-for="Reservation.Booker" required maxlength="40"/>
+    </div>
+    
+    <div class="form-group">
+        <label>From:</label>
+        <input class="form-control" id="from" type="text" asp-for="Reservation.ReservedFrom" required/>
+    </div>
+    
+    <div class="form-group">
+        <label>To:</label>
+        <input class="form-control" id="to" type="text" asp-for="Reservation.ReservedTo" required/>
+    </div>
+    
+    <div style="display: flex; justify-content: center ;
+     flex-direction: column ; align-items: center; padding: 10px;">
+        <button class="btn-crud" type="submit">Submit</button>
+    </div>
+    
+</form>
+
+<div style="margin-top: 30px;" class="generic-form">
+    <h3><u>FUTURE</u> reservations on this table</h3>
+    <table>
+        <tr>
+            <th>Client name</th>
+            <th>Reserved from</th>
+            <th>Reserved to</th>
+            <th>Actions</th>
+        </tr>
+
+        @foreach (Reservation future in Model.FutureReservations)
+        {
+            <tr>
+                <td>@future.Booker</td>
+                <td>@future.ReservedFrom.ToString("f")</td>
+                <td>@future.ReservedTo.ToString("f")</td>
+                <td>
+                    <a style="padding: 0; width: 100px " class="btn-crud" href="@Url.Action("ManageReservation", "Reservation", new { id = future.Id })">Manage</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    @section Scripts
+    {
+        <script type="text/javascript">
+            $("#from").datetimepicker({
+                format: "Y-m-d H:i",
+            });
+            $("#to").datetimepicker({
+                format: "Y-m-d H:i",
+            });
+        </script>
+    }
+
+</div>

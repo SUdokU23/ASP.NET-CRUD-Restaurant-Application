@@ -1,0 +1,87 @@
+@model Resto.ViewModels.Menu.AddItemViewModel
+
+@{
+    ViewData["Title"] = "Add item Page";
+}
+
+@section Style {
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="/css/crud.css">
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form style="margin-top: 30px;" class="generic-form" asp-action="AddItem" method="post" enctype="multipart/form-data">
+    
+    <div class="form-group">
+        <label>Item name:</label>
+        <input class="form-control" type="text" asp-for="Item.Name" placeholder="Item Name" value="@Model.Item.Name" required>
+    </div>
+    
+    <div class="form-group">
+        <label>Description:</label>
+        <textarea class="form-control input-description" asp-for="Item.Description" placeholder="Description" 
+        value="@Model.Item.Description">
+        </textarea>
+    </div>
+    
+    <div class="form-group">
+        <label>Weight in grams:</label>
+        <input class="form-control" type="number" step="any" asp-for="Item.Weight" placeholder="200" value="@Model.Item.Weight" min="1" required>
+    </div>
+    
+    <div class="form-group checkbox-group"> 
+        <label>Is item available:</label>
+        <input type="checkbox" asp-for="Item.IsAvailable" value="true" checked>
+    </div>
+    
+    <div class="form-group">
+        <label>Price in lv:</label>
+        <input class="form-control" type="number" step="any" asp-for="Item.Price" min="1" placeholder="12,5" 
+               value="@Model.Item.Price" required>
+    </div>
+    
+    <div class="form-group">
+        <label>Choose category:</label>
+
+        <select class="form-control" asp-for="CategoryName">
+            @foreach (var item in (ViewBag.Categories as List<string>)!)
+            {
+                if (ViewBag.SelectedCategory == item)
+                {
+                    <option value="@item" selected="selected">
+                        @item
+                    </option>
+                }
+                else
+                {
+                    <option value="@item">
+                        @item
+                    </option>
+                }
+            }
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label>Choose image:</label>
+        <input class="form-control file-input" type="file" asp-for="image" accept=".jpg,.jpeg,.png,.webp,.svg" />
+    </div>
+   
+    
+    <div class="btn-group">
+        <button class="btn-crud" type="submit">Submit</button>
+        <button class="btn-crud" type="button" onclick="window.location.href='@Url.Action("Index", "Home")'">
+            Cancel
+        </button>
+    </div>
+    
+</form>

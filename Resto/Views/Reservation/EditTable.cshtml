@@ -1,0 +1,39 @@
+@model Resto.Models.Table
+
+@{
+    ViewData["Title"] = "Edit Table Page";
+}
+
+@section Style {
+    <link rel="stylesheet" href="css/site.css">
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="EditTable" method="post" enctype="multipart/form-data">
+    
+    <label>Number of seats</label>
+    <select id="seats" asp-for="Seats">
+        @for (int i = 1; i <= 6; i++)
+        {
+            {
+                <option value="@i">@i</option>
+            }
+        }
+    </select>
+
+    <select asp-for="Reserved">
+        <option value="false">False</option>
+        <option value="true">True</option>
+    </select>
+
+    <button type="submit">Submit</button>
+</form>

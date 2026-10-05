@@ -1,0 +1,103 @@
+@using Resto.Service.Reservation
+@model Resto.Models.Table
+
+@inject ReservationService ReservationService
+
+@{
+    ViewData["Title"] = "Add item Page";
+
+    List<Table> tables = await ReservationService.GetAllTables();
+}
+
+@section Style {
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="~/css/waiter.css">
+    <link rel="stylesheet" href="/css/crud.css">
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form class="generic-form" asp-action="AddTable" method="post" enctype="multipart/form-data">
+    
+    <span>X Pos</span>
+    <input type="range" min="0" max="15" name="displayPosX" id="x">
+
+    <span>Y Pos</span>
+    <input type="range" min="0" max="11" name="displayPosY" id="y">
+
+    <select id="seats" asp-for="Seats">
+        @for (int i = 1; i <= 6; i++)
+        {
+            {
+                <option value="@i">@i</option>
+            }
+        }
+    </select>
+
+    <div style="display: flex; justify-content: center ; flex-direction: column ; align-items: center;padding-top: 20px; ">
+        <button class="btn-crud" type="submit" id="submit">Submit</button>
+    </div>
+    
+</form>
+
+<h3 style="color: #FAFDF3">Live preview</h3>
+<div style="border-radius: 30px; " class="tables-container" id="tablesContainer">
+
+</div>
+
+@section Scripts {
+    <script>
+        const existingTables = [
+            @foreach (Table tbl in tables)
+            {
+                @Html.Raw("{")
+
+                @Html.Raw($"id:{tbl.Id},")
+                @Html.Raw($"status:'free',")
+                @Html.Raw($"x:'{tbl.DisplayPosX}',")
+                @Html.Raw($"y:'{tbl.DisplayPosY}',")
+
+                @Html.Raw("},")
+            }
+        ];
+
+        const tablesContainer = $("#tablesContainer");
+        const submitBtn = $("#submit");
+        const sliderX = $("#x");
+        const sliderY = $("#y");
+
+        function rerender() {
+            const xPos = sliderX.val();
+            const yPos = sliderY.val();
+            
+            const previewTable = {
+                id: 'preview',
+                x: xPos,
+                y: yPos,
+                status: 'reserved'
+            }
+            renderTables(false, [ ...existingTables, previewTable ]);
+            
+            const taken = existingTables.some(t => t.x == xPos && t.y == yPos);
+            if (taken) {
+                submitBtn.attr("disabled", "");
+            } else {
+                submitBtn.removeAttr("disabled");
+            }
+        }
+        
+        rerender();
+        sliderX.on('change', rerender)
+        sliderY.on('change', rerender)
+        sliderX.on('input', rerender)
+        sliderY.on('input', rerender)
+    </script>
+}

@@ -1,0 +1,29 @@
+﻿.tables-container {
+    width: 800px;
+    height: 600px;
+    overflow: visible;
+    background-color: black;
+}
+
+.table {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    content: ' ';
+    
+}
+
+.table > svg {
+    max-width: 50px;
+    max-height: 50px;
+    width: 50px;
+    height: 50px;
+}
+
+.table-status-reserved > svg {
+    color: orange;
+}
+
+.table-status-free > svg {
+    color: green;
+}

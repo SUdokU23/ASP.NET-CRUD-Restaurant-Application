@@ -1,0 +1,54 @@
+@using Resto.ViewModels.Reservation
+@model IEnumerable<Resto.ViewModels.Reservation.WaiterTableViewModel>
+
+@{
+    ViewData["Title"] = "Waiter area";
+}
+
+@section Style {
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="css/waiter.css">
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<div style="border-radius: 30px; margin-top: 30px;" class="tables-container" id="tablesContainer">
+    
+</div>
+
+@section Scripts {
+    <script>
+        const tables = [
+            @foreach (WaiterTableViewModel tbl in Model)
+            {
+                @Html.Raw("{")
+                
+                @Html.Raw($"id:{tbl.Id},")
+                @Html.Raw($"status:'{tbl.Status}',")
+                @Html.Raw($"x:'{tbl.X}',")
+                @Html.Raw($"y:'{tbl.Y}',")
+
+                if (tbl.Status == WaiterTableViewModel.StatusReserved)
+                {
+                    @Html.Raw($"url:'{@Url.Action("ManageReservation","Reservation", new { id = tbl.ReservationId })}'");
+                }
+                else
+                {
+                    @Html.Raw($"url:'{Url.Action("ReserveTable", "Reservation", new { id = tbl.Id })}'");
+                }
+            
+                @Html.Raw("")
+                
+                @Html.Raw("},")
+            }
+        ];
+
+        const tablesContainer = $("#tablesContainer");
+        renderTables(true, tables);
+    </script>
+}

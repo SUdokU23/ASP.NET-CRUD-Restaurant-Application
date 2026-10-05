@@ -1,0 +1,71 @@
+﻿@using System.Security.Claims
+@using Resto.Extensions
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"]</title>
+    <script type="importmap"></script>
+    
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/jquery-datetimepicker/jquery.datetimepicker.min.css"/>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    
+    @await RenderSectionAsync("Style", required: false)
+</head>
+
+<body>
+<header>
+    <nav>
+        <ul>
+            <li>
+                <a class="nav-item" asp-area="" asp-controller="Home" asp-action="Index">Menu</a>
+            </li>
+            @if (User.IsLoggedIn())
+            {
+                <li>
+                    <a class="nav-item" asp-controller="Waiter" asp-action="Index">Salon</a>
+                </li>
+            }
+            <li>
+                <a class="nav-item" asp-controller="Reservation" asp-action="Index">Tables</a>
+            </li>
+            @if (User.IsInRole("Administrator"))
+            {
+                <li>
+                    <a class="nav-item" asp-controller="Auth" asp-action="ViewUsers">View users</a>
+                </li>
+                <li>
+                    <a class="nav-item" asp-controller="Auth" asp-action="Index">Register</a>
+                </li>
+            }
+            @if (User.IsLoggedIn())
+            {
+                <li>
+                    <a class="nav-item" asp-controller="Auth" asp-action="Logout">Logout</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a class="nav-item" asp-controller="Auth" asp-action="Login">Login</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</header>
+@RenderBody()
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-datetimepicker/jquery.datetimepicker.full.min.js"></script>
+<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/Reservation/Index.js" defer="defer"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+
+</body>
+</html>

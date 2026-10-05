@@ -1,0 +1,47 @@
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Resto.Service.Menu
+@using Resto.ViewModels.Menu
+
+@inject MenuService MenuService
+
+@model Resto.ViewModels.Reservation.AddOrderViewModel
+
+@section Style
+{
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/crud.css">
+}
+@{
+    List<MenuViewModel> allItems = await MenuService.GetItems();
+}
+
+<div style="display: flex; justify-content: center ;
+         flex-direction: column ; align-items: center; margin-top: 30px;" class="generic-form">
+    <h1 style="padding: 10px;">Ordering item</h1>
+
+    @using (Html.BeginForm("AddOrder", "Reservation", FormMethod.Post))
+    {
+        @Html.HiddenFor(x => x.ReservationId);
+
+        <input style="padding: 10px;" class="form-control" type="number" value="1" name="quantity">
+
+        <select style="margin-top: 10px; margin-bottom: 10px; padding: 10px;" name="orderedItem">
+            @foreach (MenuViewModel menuItem in allItems)
+            {
+                <option value="@menuItem.Id">
+                    <strong>@menuItem.Name</strong>
+                    &nbsp;
+                    <span>(@menuItem.Category - @menuItem.Weight g - @menuItem.Price.ToString("F2") BGN)</span>
+                </option>
+            }
+        </select>
+
+        <textarea class="form-control input-description" name="instructions" placeholder="Instructions"></textarea>
+        <div style="display: flex; justify-content: center ;
+         flex-direction: column ; align-items: center; padding: 15px;">
+            <button class="btn-crud" type="submit">Add</button>
+        </div>
+        
+    }
+</div>

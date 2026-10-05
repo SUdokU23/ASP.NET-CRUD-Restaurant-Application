@@ -1,0 +1,65 @@
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Resto.Extensions
+@model Reservation
+
+@section Style
+{
+    <link rel="stylesheet" href="/css/crud.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/waiter.css">
+}
+<div style="margin-top: 30px; display: flex; align-items: center;
+ justify-content: center; flex-direction: column;" class="generic-form">
+    <h1>Reservation for @Model.Booker</h1>
+
+    <h3>Reservation information</h3>
+    <table>
+        <tr>
+            <th>Reservation №</th>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <th>Table №</th>
+            <td>@Model.TableId</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>@Model.Booker</td>
+        </tr>
+        <tr>
+            <th>From</th>
+            <td>@Model.ReservedFrom.ToString("f")</td>
+        </tr>
+        <tr>
+            <th>To</th>
+            <td>@Model.ReservedTo.ToString("f")</td>
+        </tr>
+    </table>
+
+    <h3 style="padding: 10px;">Orders in this reservation</h3>
+    <a class="btn-crud" href="@Url.Action("AddOrder", "Reservation", new { reservationId = Model.Id })">Order new</a>
+    <table style="padding: 10px;">
+        <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Instructions</th>
+        </tr>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>@order.OrderedItem.Name</td>
+                <td>@order.Quantity</td>
+                <td>@order.Instructions</td>
+            </tr>
+        }
+        <tr>
+            <th>Total</th>
+            <th>
+                @Model.GetTotalPrice().ToString("F2") BGN
+            </th>
+        </tr>
+    </table>
+</div>
+
+

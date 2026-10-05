@@ -1,0 +1,36 @@
+<div class="modal fade" id="_EditModal" tabindex="-1" aria-labelledby="deleteModalLabel" inert="inert">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div  class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Edit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                You are editing table with  Id: <strong id="editTableId"></strong>?
+            </div>
+            <div class="modal-footer">
+                <form asp-action="EditTable" method="post" enctype="multipart/form-data">
+                    
+                    <input type="hidden" name="id" id="idInput">
+
+                    <label>Number of seats</label>
+                    <select id="seats" name="seats">
+                        @for (int i = 1; i <= 6; i++)
+                        {
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        }
+                    </select>
+
+                    <select name="reserved" id="reserved">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="modal fade" id="_AddCategory" tabindex="-1" aria-labelledby="deleteModalLabel" inert="inert">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Create Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                You are creating a new category!!
+            </div>
+            <div class="modal-footer">
+                <form asp-action="AddCategory" method="post" enctype="multipart/form-data">
+                    
+                    <label>Category name</label>
+                    <input type="text" name="name" id="nameInput" placeholder="Category Name" required/>
+
+                    <button type="submit">Add</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeCategoryModal()">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

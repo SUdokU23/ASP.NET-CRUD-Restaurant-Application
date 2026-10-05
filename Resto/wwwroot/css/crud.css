@@ -1,0 +1,162 @@
+.generic-form {
+    background-color: #FAFDF3;
+    border-radius: 30px;
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-group label {
+    width: 150px;
+    min-width: 150px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    min-width: 0;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #6CB2EB;
+    box-shadow: 0 0 0 3px rgba(108, 178, 235, 0.2);
+}
+
+.input-description {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.checkbox-group input {
+    margin-left: 0;
+    width: auto;
+}
+
+select.form-control {
+    padding: 10px;
+    background-color: white;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.addDelete-item {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #FAFDF3;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 30px;
+    font-family: "Roboto Light", serif;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    border: none;
+    white-space: nowrap;
+}
+
+.addDelete-item:hover {
+    opacity: 0.8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-crud {
+    background-color: #3D402F;
+    color: #FAFDF3;
+    font-family: "Roboto Light", serif;
+    border-radius: 30px;
+    width: 130px;
+    height: 30px;
+    text-decoration: none;
+    margin: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: #000000 solid 1px;
+}
+
+.btn-crud:hover {
+    opacity: 0.9;
+}
+
+
+@media (max-width: 768px) {
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .btn-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-crud,
+    .addDelete-item {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .generic-form {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .form-control {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+    .btn-crud {
+        font-size: 14px;
+        height: auto;
+        padding: 10px;
+    }
+
+    .addDelete-item {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
